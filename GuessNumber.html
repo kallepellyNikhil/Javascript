@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess</title>
+</head>
+<body style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background-color: #f0f4f7; margin: 0;">
+    
+    <h1 style="text-align: center; font-size: 2rem; color: #333; margin-bottom: 20px;" id="challenge"></h1>
+    
+    
+
+    <div id="grid" style="display: grid; grid-template-columns: repeat(3, 100px); gap: 10px; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <div style="background-color: #e0f7fa; padding: 30px; text-align: center; font-size: 1.5rem; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;"></div>
+        <div style="background-color: #e0f7fa; padding: 30px; text-align: center; font-size: 1.5rem; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;"></div>
+        <div style="background-color: #e0f7fa; padding: 30px; text-align: center; font-size: 1.5rem; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;"></div>
+        <div style="background-color: #e0f7fa; padding: 30px; text-align: center; font-size: 1.5rem; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;"></div>
+        <div style="background-color: #e0f7fa; padding: 30px; text-align: center; font-size: 1.5rem; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;"></div>
+        <div style="background-color: #e0f7fa; padding: 30px; text-align: center; font-size: 1.5rem; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;"></div>
+        <div style="background-color: #e0f7fa; padding: 30px; text-align: center; font-size: 1.5rem; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;"></div>
+        <div style="background-color: #e0f7fa; padding: 30px; text-align: center; font-size: 1.5rem; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;"></div>
+        <div style="background-color: #e0f7fa; padding: 30px; text-align: center; font-size: 1.5rem; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;"></div>
+    </div>
+    <p id="message"></p>
+
+    <script>
+        const message = document.getElementById("message");
+        const challenge = document.getElementById("challenge");
+    
+        // Make sure challengeNumber is an integer between 0 and 9
+        const challengeNumber = Math.floor(Math.random() * 10);
+        challenge.textContent = `Guess the Number ${challengeNumber}`;
+        
+        let count = 0;
+        const maxAttempts = 3;
+    
+        const grid = document.getElementById("grid");
+    
+        function handleClick(e) {
+            // Ensure the cell hasn't already been clicked
+            if (e.target.textContent === '' && count < maxAttempts) {
+                const number = Math.floor(Math.random() * 10); // Random number between 0 and 9
+                e.target.textContent = `${number}`;
+                e.target.style.backgroundColor = '#80deea';
+                count++;
+    
+                if (number === challengeNumber) {
+                    message.innerHTML = "Well Played. <a href='http://127.0.0.1:5500/GuessNumber.html'>Play Again</a>";
+                    grid.removeEventListener('click', handleClick); // Stop further clicks
+                } else if (count === maxAttempts) {
+                    // After 3 wrong attempts
+                    message.innerHTML = `Sorry, try again! <a href='http://127.0.0.1:5500/GuessNumber.html'>Play Again</a>`;
+                    grid.removeEventListener("click", handleClick); // Stop further clicks
+                }
+            }
+        }
+    
+        // Add event listener to the grid
+        grid.addEventListener("click", handleClick);
+    </script>
+    
+
+</body>
+</html>
